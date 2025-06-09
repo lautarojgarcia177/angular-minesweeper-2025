@@ -1,0 +1,18 @@
+<div
+  class="cell flex justify-center items-center"
+  (click)="revealCell()"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+  [class.hovered-cell]="isHovered()"
+  [class.revealed]="cell().state === Cellstate.revealed"
+  [class.flagged]="cell().state === Cellstate.flagged"
+  [class.revealed-bomb]="
+    cell().containsMine && cell().state === Cellstate.revealed
+  "
+  (contextmenu)="onAuxClick($event)"
+>
+  @if(cell().state === Cellstate.revealed && !cell().containsMine) {
+  @if(cell().adjacentMines > 0 ) {
+  <span> {{ cell().adjacentMines }} </span>
+  } }
+</div>

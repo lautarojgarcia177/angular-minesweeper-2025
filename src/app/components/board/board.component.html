@@ -1,0 +1,6 @@
+<div class="board">
+  @for (row of gameStore.board(); track row[0].id) { @for (cell of row; track
+  cell.id) {
+  <app-cell [cell]="cell"></app-cell>
+  } }
+</div>
