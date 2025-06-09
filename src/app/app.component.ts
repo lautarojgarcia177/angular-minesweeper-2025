@@ -5,7 +5,7 @@ import { effect } from '@angular/core';
 import Swal from 'sweetalert2';
 import { SoundService } from './services/sound.service';
 import { Sound } from './enums/enums';
-import { NgOptimizedImage } from '@angular/common'
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -18,25 +18,23 @@ export class AppComponent {
   soundService = inject(SoundService);
 
   constructor() {
-    effect(async () => {
-      let playAgain: any;
-      if (this.store.isGameLost()) {
-        this.soundService.playSound(Sound.lost);
-        playAgain = await Swal.fire({
-          title: '💀 Game over 💀',
-          confirmButtonText: 'Play again',
-          position: 'top',
-        });
-      } else if (this.store.isGameWon()) {
-        this.soundService.playSound(Sound.win);
-        playAgain = await Swal.fire({
-          title: '😁 You win 😁',
-          confirmButtonText: 'Play again',
-          position: 'top',
-        });
-      }
+    const handlePlayAgain = async (title: string, sound: Sound) => {
+      this.soundService.playSound(sound);
+      const playAgain = await Swal.fire({
+        title,
+        confirmButtonText: 'Play again',
+        position: 'top',
+      });
       if (playAgain.isConfirmed) {
         this.store.startNewGame(9, 9);
+      }
+    };
+
+    effect(async () => {
+      if (this.store.isGameLost()) {
+        await handlePlayAgain('💀 Game over 💀', Sound.lost);
+      } else if (this.store.isGameWon()) {
+        await handlePlayAgain('😁 You win 😁', Sound.win);
       }
     });
   }

@@ -6,6 +6,10 @@
   overflow: hidden;
   justify-content: start;
   align-items: center;
-  background-image: url('/img/bg.png');
+  background-image: url("/img/bg.png");
 }
 
+.footer {
+  margin-top: auto;
+  margin-bottom: 16px;
+}
